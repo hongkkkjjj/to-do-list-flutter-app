@@ -25,11 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
     _updateDetailTimeLeft();
 
     // Set 60sec timer to refresh time left section
-    const timerPeriod = const Duration(seconds:60);
+    const timerPeriod = const Duration(seconds: 60);
     Timer.periodic(timerPeriod, (timer) {
-      setState(() {
         _updateDetailTimeLeft();
-      });
     });
   }
 
@@ -121,7 +119,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   _titleText('Start Date'),
                   _titleText('End Date'),
-                  _titleText((details.isExpired) ? 'Overdue time' : 'Time left'),
+                  _titleText(
+                      (details.isExpired) ? 'Overdue time' : 'Time left'),
                 ],
               ),
               SizedBox(height: 15),
@@ -223,24 +222,25 @@ class _HomeScreenState extends State<HomeScreen> {
   /// Function
 
   void _updateDetailTimeLeft() {
-    Provider.of<ToDoDetailsProvider>(context, listen: false).updateTimeLeft();
+    setState(() {
+      Provider.of<ToDoDetailsProvider>(context, listen: false).updateTimeLeft();
+    });
   }
 
   void _goToCreateTaskScreen(bool createNewToDo, int toDoId) async {
-    final result = await Util.pushTo(context, () => CreateTaskScreen(createNewToDo, toDoId), 'CreateTaskScreen');
+    final result = await Util.pushTo(context,
+        () => CreateTaskScreen(createNewToDo, toDoId), 'CreateTaskScreen');
     if (result == 'refresh') {
-      setState(() {
-        _updateDetailTimeLeft();
-      });
+      _updateDetailTimeLeft();
     }
   }
 
   void _updateToDoStatus(int id, String status) {
-    Provider.of<ToDoDetailsProvider>(context, listen: false).updateStatus(id, status).then((value) {
+    Provider.of<ToDoDetailsProvider>(context, listen: false)
+        .updateStatus(id, status)
+        .then((value) {
       if (value == 'ok') {
-        setState(() {
-          _updateDetailTimeLeft();
-        });
+        _updateDetailTimeLeft();
       }
     });
   }

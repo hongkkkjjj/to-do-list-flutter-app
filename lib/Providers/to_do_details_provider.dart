@@ -49,6 +49,8 @@ class ToDoDetailsProvider extends ChangeNotifier {
       }
       record.timeLeft = timeLeft;
     }
+
+    notifyListeners();
   }
 
   Future<ToDoDetails> getSingleRecord(int id) async {
@@ -86,6 +88,8 @@ class ToDoDetailsProvider extends ChangeNotifier {
 
     msg = 'ok';
 
+    notifyListeners();
+
     return msg;
   }
 
@@ -111,6 +115,8 @@ class ToDoDetailsProvider extends ChangeNotifier {
     // sort the To-Do list
     _toDoDetailsList.sort((a, b) => b.status.compareTo(a.status));
 
+    notifyListeners();
+
     return msg;
   }
 
@@ -127,6 +133,8 @@ class ToDoDetailsProvider extends ChangeNotifier {
 
     // sort the To-Do list
     _toDoDetailsList.sort((a, b) => b.status.compareTo(a.status));
+
+    notifyListeners();
 
     return msg;
   }

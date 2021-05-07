@@ -18,7 +18,7 @@ class Util {
       List<Widget> buttonList, String title) {
     return showDialog(
       context: context,
-      child: (Platform.isIOS)
+      builder: (context) => (Platform.isIOS)
           ? CupertinoAlertDialog(
               title: (title.isNotEmpty)
                   ? Padding(
@@ -80,8 +80,8 @@ class Util {
   }
 
   /// Navigator related
-  static Future<dynamic> pushTo(
-      BuildContext context, Widget Function() createScreen, String screenName) async {
+  static Future<dynamic> pushTo(BuildContext context,
+      Widget Function() createScreen, String screenName) async {
     final result = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => createScreen(),
